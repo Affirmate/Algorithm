@@ -1,0 +1,27 @@
+CREATE TABLE BOOKS {
+	Book_Id Varchar(3),
+    Book_Name Varchar(25),
+    Author_Name Varchar(50),
+    Publishers Varchar(10),
+    Price int,
+    Book_Type Varchar(10), 
+    Quantity int,
+};
+
+INSERT INTO BOOKS VALUES ('C01', 'Fast Cook', 'Lata Kapoor', 'EPB', 355, 'Cookery', 5);
+INSERT INTO BOOKS VALUES ('F01', 'The Tears', 'William Hopkins', 'First', 650, 'Fiction', 20);
+INSERT INTO BOOKS VALUES ('T01', 'My C++', 'Brian & Brooke', 'EPB', 350, 'Text', 10);
+INSERT INTO BOOKS VALUES ('T02', 'C++ Brain', 'A.W. Rossaine', 'TDH', 350, 'Text', 15);
+INSERT INTO BOOKS VALUES ('F02', 'Thunderbolts', 'Anna Roberts', 'First', 750, 'Fiction', 50);
+
+CREATE TABLE ISSUED { Book_Id Varchar(3), Quantity_Issued int };
+
+INSERT INTO ISSUED VALUES ('T01', 4);
+INSERT INTO ISSUED VALUES ('C01', 5);
+INSERT INTO ISSUED VALUES ('F01', 2);
+INSERT INTO ISSUED VALUES ('C01', 6);
+INSERT INTO ISSUED VALUES ('T02', 3);
+
+SELECT Book_Name FROM BOOKS WHERE Book_Type = 'Text';				/*1*/
+SELECT Book_Name, Price FROM BOOKS order by prics asc;					/*2*/
+
