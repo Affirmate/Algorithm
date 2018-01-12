@@ -1,0 +1,141 @@
+#include <iostream.h>
+#include <conio.h>
+#include <fstream.h>
+
+class drama
+{
+	int dramacode, noofscenes;
+	float duration;
+	char drama_title[35];
+public:
+	void dramainput(void);
+	void dramaoutput(void);
+	
+	int getdramacode()	//Accessor function
+	{
+		return dramacode;
+	}
+	
+}d1;
+
+void drama::dramainput(void)
+{
+		cout << "\nEnter drama code: ";
+		cin >> dramacode;
+		cout << "\nEnter no. of scenes: ";
+		cin >> noofscenes;
+		cout << "\nEnter duration: ";
+		cin >> duration;
+		cout << "\nEnter drama title: ";
+		cin.getline(drama_title, 35);
+}
+
+void dramaoutput(void)
+{
+	cout << "\nDrama code: " << dramacode;
+	cout << "\nNo. of scenes: " << noofscenes;
+	cout << "\nDuration: " << duration;
+	cout << "\nDrama title: " << printf("%s", drama_title);
+}
+
+
+int main()
+{
+
+
+/*MENU*/
+//
+//
+//
+
+//1. Storing details
+int n;
+cout << "\nEnter no. of dramas to be stored: ";
+cin >> n;
+drama d[n];
+
+fstream fio;
+fio.open("drama.dat", ios::in | ios::out | ios::bin);
+if(!fio)
+{
+	cout << "\nCannot open file!\n";
+	return 1;
+}
+
+cout << "\nEnter details for " << n << " students\n";
+for (int i=0; i<n; i++)
+{
+	d[i].dramainput();
+	fio.write((char*)&d[i], sizeof (d[i]));
+}
+
+fio.seekg(0)	//seekg(0) resets the file pointer to the start, so that the file can be accessed from the beginning
+
+
+//2. Searching a record on basis on drama_title and display it	
+char dramasearch[15];
+cout << "\nEnter drama title to be searched for: ";
+cin.getline(dramasearch, 15);
+while(!fio.eof())
+{
+	fio.read((char*)&d1, sizeof(d1));
+	if (strcmp(d1.getdramatitle, dramasearch) == 0)
+	{
+		d1.dramaoutput();
+		found == 'y';
+		break;
+	}
+}
+
+if (found == 'n')
+	cout << "\nDrama title not found in file." << endl;
+
+
+//3. Count total number of records
+
+
+
+//4. Display record with dramacode = 111
+if (d1.getdramacode == 111)
+	d1.dramaoutput();
+
+//5. Delete record using drama code
+int dcode; char found = 'f', confirm = 'n';
+cout << "\nEnter drama code of drama to be deleted: ";
+cin >> dcode;
+ofstream file ("temp.dat", ios::out | ios::bin);
+while(!fio.eof())
+{
+	fio.read((char*)&d1, sizeof(d1));
+	
+	if (d1.getdramacode == dcode)
+	{
+		d1.dramaoutput();
+		found == 't';
+		cout << "\nAre you sure you want to delete this record? (y/n) ";
+		cin >> confirm;
+		if (confirm == 'n')
+			file.write((char*)&d1, sizeof(d1));	//When confirm is yes, record is not written in temp file
+	}
+	else 
+		file.write((char*)&d1, sizeof(d1));
+}
+
+if(found == 'f')
+cout << "\nRecord not found\n";
+fio.close();
+file.close();
+remove("drama.dat");
+rename("temp.dat", "drama.dat")
+fio.open("drama.dat", ios::in);
+
+cout << "\nNow the file contains\n";
+while(!fio.eof())
+{
+	fio.read((char*)&d1, sizeof(d1));
+	if(fio.eof())
+		break;
+	d1.dramaoutput();
+}
+fio.close();
+
