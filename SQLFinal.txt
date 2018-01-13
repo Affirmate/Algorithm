@@ -1,0 +1,47 @@
+CREATE TABLE BOOKS (
+    Book_Id varchar2(4) Primary Key,
+    Book_Name varchar2(25) NOT NULL,
+    Author_Name varchar2(20),
+    Publishers varchar2(3),
+    Price number(4),
+    Book_Type varchar2(10), 
+    Quantity number(3) CHECK(Quantity > 4)
+);
+
+INSERT INTO BOOKS VALUES ('C01', 'Fast Cook', 'Lata Kapoor', 'EPB', 355, 'Cookery', 5);
+INSERT INTO BOOKS VALUES ('F01', 'The Tears', 'William Hopkins', 'First', 650, 'Fiction', 20);
+INSERT INTO BOOKS VALUES ('T01', 'My C++', 'Brian & Brooke', 'EPB', 350, 'Text', 10);
+INSERT INTO BOOKS VALUES ('T02', 'C++ Brain', 'A.W. Rossaine', 'TDH', 350, 'Text', 15);
+INSERT INTO BOOKS VALUES ('F02', 'Thunderbolts', 'Anna Roberts', 'First', 750, 'Fiction', 50);
+
+
+CREATE TABLE ISSUED ( Book_Id varchar2(3), Quantity_Issued number(2) );
+
+INSERT INTO ISSUED VALUES ('T01', 4);
+INSERT INTO ISSUED VALUES ('C01', 5);
+INSERT INTO ISSUED VALUES ('F01', 2);
+INSERT INTO ISSUED VALUES ('C01', 6);
+INSERT INTO ISSUED VALUES ('T02', 3);
+
+SELECT Book_Name FROM BOOKS WHERE Book_Type = 'Text';
+SELECT Book_Name, Price FROM BOOKS order by Price;
+
+update BOOKS set Price=Price+50 where Publishers='EPB';
+
+SELECT Book_Name, Quantity_Issued, Price FROM BOOKS, ISSUED WHERE BOOKS.Book_Id = ISSUED.Book_Id AND Publishers = 'EPB';
+
+SELECT MAX(Price), Publishers FROM BOOKS GROUP BY Publishers;     
+
+SELECT MAX(Price), Publishers FROM BOOKS GROUP BY Publishers HAVING MAX(Price) > 500;
+
+SELECT DISTINCT Publishers FROM BOOKS WHERE (Price > 400);
+
+CREATE VIEW View1 AS (SELECT Book_Name, Author_Name, Quantity_Issued FROM BOOKS, ISSUED);
+
+SELECT * FROM View1;   
+
+SELECT * FROM BOOKS, ISSUED WHERE Quantity_Issued BETWEEN 20 AND 50;
+
+DELETE FROM BOOKS WHERE Book_Name = 'My C++'; /*Doubt*/	
+
+SELECT * FROM BOOKS WHERE Author_Name LIKE 'A%';   /*Doubt*/
